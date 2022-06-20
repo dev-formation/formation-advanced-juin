@@ -9,6 +9,7 @@ import { VersionService } from '../../services/version.service';
 })
 export class HeaderComponent implements OnInit {
   public version!: number;
+  public currentDate = new Date();
 
   constructor(
       private versionService: VersionService,
@@ -24,6 +25,6 @@ export class HeaderComponent implements OnInit {
 
   public openModal(): void {
 
-    this.modalService.displayModal('Test', `Test ajouté avec success ! 🎉`)
+    this.modalService.displayModal($localize `Test`, $localize `Test ajouté avec success ! 🎉`)
   }
 }
