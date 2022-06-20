@@ -3,10 +3,10 @@
     {
       "tjmHt": 600,
       "nbJours": 20,
-      "tva": 20,
-      "state": "CANCELED",
+      "tva": 10,
+      "state": "CONFIRMED",
       "typePresta": "formation",
-      "client": "Capgemini2",
+      "client": "Decathlon",
       "comment": "Merci Cap",
       "id": 1
     },
@@ -69,6 +69,16 @@
       "state": "OPTION",
       "comment": "Des crêpes pour tout le monde ! ",
       "id": 14
+    },
+    {
+      "tjmHt": 600,
+      "typePresta": "test",
+      "nbJours": 1,
+      "client": "test",
+      "tva": 20,
+      "state": "OPTION",
+      "comment": null,
+      "id": 15
     }
   ],
   "clients": [

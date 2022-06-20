@@ -22,6 +22,9 @@ export class PageListClientsComponent implements OnInit {
   }
   
   ngOnInit(): void {
+    // this.clientsService.collection$.subscribe(
+    //   (data) => console.log("TEST INstance clients", data)
+    // )
   }
 
   public onClickDeleteClient(client: Client): void {

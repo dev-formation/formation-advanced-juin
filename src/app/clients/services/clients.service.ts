@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, Subject, tap } from 'rxjs';
+import { catchError, map, Observable, Subject, take, tap } from 'rxjs';
 import { ErrorHandler } from 'src/app/core/abstracts/error-handler';
 import { StateClient } from 'src/app/core/enums/state-client';
 import { Client } from 'src/app/core/models/client';
@@ -17,6 +17,7 @@ export class ClientsService extends ErrorHandler {
   constructor(private http: HttpClient) { 
     super();
     this.collection$ = this.http.get<Client[]>(`${this.urlApi}/clients`).pipe(
+      // tap((data) => console.log("TEST : Object JSON : ", data[0] as Client)),
       map((listObj) => {
         return listObj.map((obj) => {
           return new Client(obj)
