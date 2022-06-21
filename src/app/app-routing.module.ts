@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { NoPreloading, RouterModule, Routes } from '@angular/router';
+import { NoPreloading, PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   { path: '', redirectTo: 'sign-in', pathMatch: 'full' }, // localhost:4200
@@ -10,8 +10,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, 
-       { preloadingStrategy: NoPreloading })], // LazyLoading Pur
-  //imports: [RouterModule.forRoot(routes)], // LazyLoading Pur equivalent à le ligne au dessus
+    { preloadingStrategy: PreloadAllModules })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
