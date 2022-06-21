@@ -6,9 +6,10 @@ import { PageListOrdersComponent } from './pages/page-list-orders/page-list-orde
 
 
 const routes: Routes = [
+  // préfixe /orders
   { path: '', component: PageListOrdersComponent },
-  { path: 'add', component: PageAddOrderComponent },
-  { path: 'edit/:id', component: PageEditOrderComponent }
+  { path: 'add', component: PageAddOrderComponent }, // /orders/add
+  { path: 'edit/:id', component: PageEditOrderComponent } // /orders/edit/1
 ];
 
 @NgModule({
