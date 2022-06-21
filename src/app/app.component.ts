@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -9,4 +10,7 @@ export class AppComponent {
   title = 'formation-angular-advanced-starter';
   private testPrivate = 'Ceci n\'est pas accessible dans le template'; 
 
+  constructor(private router: Router) {
+    console.log(this.router.config);
+  }
 }

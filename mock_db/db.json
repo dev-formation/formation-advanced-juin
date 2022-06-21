@@ -62,23 +62,13 @@
     },
     {
       "tjmHt": 600,
-      "typePresta": "formation angular init",
       "nbJours": 1,
-      "client": "Scalian",
       "tva": 20,
-      "state": "OPTION",
+      "state": "CONFIRMED",
+      "typePresta": "formation angular init",
+      "client": "Scalian",
       "comment": "Des crêpes pour tout le monde ! ",
       "id": 14
-    },
-    {
-      "tjmHt": 600,
-      "typePresta": "test",
-      "nbJours": 1,
-      "client": "test",
-      "tva": 20,
-      "state": "OPTION",
-      "comment": null,
-      "id": 15
     }
   ],
   "clients": [

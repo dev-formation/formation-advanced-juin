@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BehaviorSubject, Observable, pluck, Subject, Subscription, tap } from 'rxjs';
 import { StateOrder } from 'src/app/core/enums/state-order';
 import { Order } from 'src/app/core/models/order';
 import { VersionService } from 'src/app/core/services/version.service';
@@ -12,13 +12,14 @@ import { OrdersService } from '../../services/orders.service';
   templateUrl: './page-list-orders.component.html',
   styleUrls: ['./page-list-orders.component.scss']
 })
-export class PageListOrdersComponent implements OnInit {
+export class PageListOrdersComponent implements OnInit, OnDestroy {
   public titleParent = 'Liste de commandes';
   // public collection!: Order[];
   // public collection$: Observable<Order[]>;
   public subCollection$: Subject<Order[]>;
   public numVersion$: BehaviorSubject<number>;
   public headers: string[];
+  public collection!: Order[]; 
 
   public titleTest = 'Le titre de mon composant';
 
@@ -29,17 +30,30 @@ export class PageListOrdersComponent implements OnInit {
   public stateOrder = StateOrder;
   
   private count = 0;
+  private subscription: Subscription;
   // private subNumVersion: Subscription;
 
   constructor(
     private ordersService: OrdersService,
     private versionService: VersionService,
-    private router: Router) { 
+    private router: Router,
+    private route: ActivatedRoute) { 
     this.headers = ["","", $localize `TjmHt`, $localize `NbJours`, $localize `TVA`, $localize `Total HT`, $localize `Total TTC`, $localize `Type Presta`, $localize `Client`, $localize `State`];
     
     // this.collection$ = this.ordersService.collection$;
     this.subCollection$ = this.ordersService.subCollection$;
-    this.ordersService.refreshCollection();
+    this.subscription = this.subCollection$.subscribe(
+      (listOrder: Order[]) => this.collection = [...listOrder]
+    )
+    //this.ordersService.refreshCollection();
+
+    this.route.data.pipe(
+      tap((data) => console.log(data)),//{ preload: true, orders: (8) […] }
+      pluck('orders') // je recupère simplement la propriété orders de mon objet data => (8) […]
+    ).subscribe(
+      (listOrder: Order[]) => this.collection = [...listOrder]
+    )
+
 
     // this.ordersService.collection$.subscribe({
     //     next: (data) => { 
@@ -93,5 +107,6 @@ export class PageListOrdersComponent implements OnInit {
   ngOnDestroy(): void {
     console.log('Instance detruite + desinscription');
     // this.subNumVersion.unsubscribe();
+    this.subscription.unsubscribe();
   }
 }

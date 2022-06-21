@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, Subject, tap } from 'rxjs';
+import { ErrorHandler } from 'src/app/core/abstracts/error-handler';
 import { StateOrder } from 'src/app/core/enums/state-order';
 import { Order } from 'src/app/core/models/order';
 import { environment } from 'src/environments/environment';
@@ -8,18 +9,25 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class OrdersService {
+export class OrdersService extends ErrorHandler {
   public collection$!: Observable<Order[]>;
   public subCollection$ = new Subject<Order[]>();
   private urlApi = environment.urlApi;
 
   constructor(private http: HttpClient) {
+    super();
     this.collection$ = this.http.get<Order[]>(`${this.urlApi}/orders`).pipe(
       map(tabObj => {
         return tabObj.map(obj => {
           return new Order(obj)
         })
       })
+    );
+   }
+
+   public loadOrders(): Observable<Order[]> {
+    return this.collection$.pipe(
+      catchError(this.handleError)
     );
    }
 
