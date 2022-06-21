@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { pipe, pluck, Subject, Subscription, tap } from 'rxjs';
 import { StateClient } from 'src/app/core/enums/state-client';
 import { Client } from 'src/app/core/models/client';
 import { ClientsService } from '../../services/clients.service';
@@ -9,15 +10,36 @@ import { ClientsService } from '../../services/clients.service';
   templateUrl: './page-list-clients.component.html',
   styleUrls: ['./page-list-clients.component.scss']
 })
-export class PageListClientsComponent implements OnInit {
+export class PageListClientsComponent implements OnInit, OnDestroy {
   public headers: string[];
   public subCollection$: Subject<Client[]>;
+  public collection!: Client[];
   public stateClient = StateClient;
 
-  constructor(private clientsService: ClientsService) { 
+  private subscription: Subscription;
+
+  constructor(
+    private clientsService: ClientsService,
+    private route: ActivatedRoute
+  ) { 
     this.headers = ['', '', 'Name', 'TotalCaHt', 'Tva', 'TotalTTC', 'State'];
     this.subCollection$ = this.clientsService.subCollection$;
-    this.clientsService.refreshCollection();
+    this.subscription = this.subCollection$.pipe(
+      tap(() =>console.log("Récup via subject"))
+    ).subscribe(
+      (listClient: Client[]) => {
+        this.collection = [...listClient];
+      }
+    )
+    // this.clientsService.refreshCollection();
+    this.route.data.pipe(
+      tap(() =>console.log("Init via resolve")),
+      pluck('clients')
+    ).subscribe(
+      (listClient: Client[]) => {
+        this.collection = [...listClient];
+      }
+    )
     console.log('Composant list client instancié !');
   }
   
@@ -41,6 +63,7 @@ export class PageListClientsComponent implements OnInit {
   
   ngOnDestroy(): void {
     console.log('Composant list client detruit ...');
+    this.subscription.unsubscribe();
   }
 
 }

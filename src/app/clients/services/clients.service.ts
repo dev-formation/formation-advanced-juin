@@ -44,11 +44,15 @@ export class ClientsService extends ErrorHandler {
   }
 
   public add(client: Client): Observable<Client> {
-    return this.http.post<Client>(`${this.urlApi}/clients`, client);
+    return this.http.post<Client>(`${this.urlApi}/clients`, client).pipe(
+      tap(() => this.refreshCollection())
+    );
   }
 
   public update(client: Client): Observable<Client> {
-    return this.http.put<Client>(`${this.urlApi}/clients/${client.id}`, client);
+    return this.http.put<Client>(`${this.urlApi}/clients/${client.id}`, client).pipe(
+      tap(() => this.refreshCollection())
+    );
   }
 
   public changeState(client: Client, state: StateClient): Observable<Client> {
