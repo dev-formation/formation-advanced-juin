@@ -7,9 +7,19 @@ import { PageListOrdersComponent } from './pages/page-list-orders/page-list-orde
 
 const routes: Routes = [
   // préfixe /orders
-  { path: '', component: PageListOrdersComponent },
-  { path: 'add', component: PageAddOrderComponent }, // /orders/add
+  { path: '', redirectTo: 'add', pathMatch: 'full' },
+  {
+    path: '', 
+    component: PageListOrdersComponent, // /orders
+    children: [
+      { path: 'add', component: PageAddOrderComponent }, // /orders/add
+      { path: 'edit/:id', component: PageEditOrderComponent } // /orders/edit/1
+    ]
+  },
+  //ne seront jamais atteintes car les routes children l'emportent
+  { path: 'add', component: PageAddOrderComponent }, // /orders/add 
   { path: 'edit/:id', component: PageEditOrderComponent } // /orders/edit/1
+
 ];
 
 @NgModule({
