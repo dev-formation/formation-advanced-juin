@@ -1,10 +1,13 @@
 {
   "orders": [
     {
+      "taux_tva": 20,
+      "nb_days": 1,
+      "tjm_ht": 1200,
+      "state": "CANCELED",
       "tjmHt": 600,
       "nbJours": 20,
       "tva": 10,
-      "state": "CONFIRMED",
       "typePresta": "formation",
       "client": "Decathlon",
       "comment": "Merci Cap",
@@ -69,16 +72,6 @@
       "state": "OPTION",
       "comment": "Des crêpes pour tout le monde ! ",
       "id": 14
-    },
-    {
-      "tjmHt": 600,
-      "typePresta": "test",
-      "nbJours": 1,
-      "client": "test",
-      "tva": 20,
-      "state": "OPTION",
-      "comment": null,
-      "id": 15
     }
   ],
   "clients": [

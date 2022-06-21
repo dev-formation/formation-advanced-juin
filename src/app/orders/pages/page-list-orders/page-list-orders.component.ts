@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { BehaviorSubject, forkJoin, Observable, Subject, Subscription, switchMap } from 'rxjs';
+import { BehaviorSubject, forkJoin, map, Observable, Subject, Subscription, switchMap, tap } from 'rxjs';
 import { StateOrder } from 'src/app/core/enums/state-order';
 import { Order } from 'src/app/core/models/order';
 import { VersionService } from 'src/app/core/services/version.service';
@@ -20,6 +20,7 @@ export class PageListOrdersComponent implements OnInit {
   public subCollection$: Subject<Order[]>;
   public numVersion$: BehaviorSubject<number>;
   public headers!: string[];
+  public headers$: Observable<string[]>;
 
   public titleTest = 'Le titre de mon composant';
 
@@ -37,14 +38,28 @@ export class PageListOrdersComponent implements OnInit {
     private versionService: VersionService,
     private router: Router,
     private translate: TranslateService) { 
-      this.translate.onLangChange.pipe(
+
+      this.headers$ = this.translate.onLangChange.pipe(
+        tap((param) => console.log(param)),
         switchMap(() => {
           return this.getHeadersTranslation()}
-        )
-      ).subscribe( (tabHeader: string[]) => {
-        console.log(tabHeader);
-        this.headers = ["", "",...tabHeader];
-      })
+        ),
+        map((tab: string[]) => ["", "", ...tab])
+      )
+      // .subscribe( (tabHeader: string[]) => {
+      //   console.log(tabHeader);
+      //   this.headers = ["", "",...tabHeader];
+      // })
+
+      /*
+      opérationAsync.subscribe(
+        () => {
+          j'obtiens la réponse
+        }
+      )
+      */
+
+
     // this.headers = ["","", "TjmHt", "NbJours", "TVA", "Total HT", "Total TTC", "Type Presta", "Client", "State"];
     
     
