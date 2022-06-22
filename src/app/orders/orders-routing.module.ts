@@ -11,9 +11,9 @@ const routes: Routes = [
   {
     path: '', 
     component: PageListOrdersComponent, // /orders
-    resolve: {
-      orders: ListOrderResolver
-    },
+    // resolve: {
+    //   orders: ListOrderResolver
+    // },
     children: [
       { path: 'add', component: PageAddOrderComponent }, // /orders/add
       { path: 'edit/:id', component: PageEditOrderComponent } // /orders/edit/1

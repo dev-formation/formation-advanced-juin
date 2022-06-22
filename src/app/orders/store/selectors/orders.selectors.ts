@@ -4,7 +4,7 @@ import { ordersFeatureKey, OrdersState } from "../reducers/orders.reducers";
 export const OrdersFeature = createFeatureSelector<OrdersState>(ordersFeatureKey);
 
 export const selectAllOrders = createSelector(
-    OrdersFeature, 
+    OrdersFeature,
     (state: OrdersState) => {
         return state.orders
     }

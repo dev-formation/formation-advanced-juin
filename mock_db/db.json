@@ -14,7 +14,7 @@
       "tjmHt": 600,
       "nbJours": 10,
       "tva": 20,
-      "state": "CONFIRMED",
+      "state": "CANCELED",
       "typePresta": "formation",
       "client": "Modis",
       "comment": "Merci Modis",
@@ -59,66 +59,6 @@
       "state": "CONFIRMED",
       "comment": "Des crêpes pour tout le monde ! ",
       "id": 14
-    },
-    {
-      "tjmHt": 600,
-      "typePresta": "test",
-      "nbJours": 1,
-      "client": "test",
-      "tva": 20,
-      "state": "OPTION",
-      "comment": null,
-      "id": 15
-    },
-    {
-      "tjmHt": 600,
-      "nbJours": 1,
-      "tva": 20,
-      "state": "CONFIRMED",
-      "typePresta": "ok",
-      "client": "ok",
-      "comment": null,
-      "id": 16
-    },
-    {
-      "tjmHt": 600,
-      "typePresta": "test",
-      "nbJours": 1,
-      "client": "test",
-      "tva": 20,
-      "state": "OPTION",
-      "comment": null,
-      "id": 17
-    },
-    {
-      "tjmHt": 600,
-      "nbJours": 1,
-      "tva": 20,
-      "state": "CONFIRMED",
-      "typePresta": "coucou",
-      "client": "coucou",
-      "comment": null,
-      "id": 18
-    },
-    {
-      "tjmHt": 600,
-      "nbJours": 1,
-      "tva": 20,
-      "state": "CONFIRMED",
-      "typePresta": "coucou",
-      "client": "coucou",
-      "comment": null,
-      "id": 19
-    },
-    {
-      "tjmHt": 606,
-      "nbJours": 1,
-      "tva": 20,
-      "state": "CONFIRMED",
-      "typePresta": "coucou",
-      "client": "coucou",
-      "comment": null,
-      "id": 20
     }
   ],
   "clients": [
