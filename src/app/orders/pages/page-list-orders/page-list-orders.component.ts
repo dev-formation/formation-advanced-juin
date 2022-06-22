@@ -6,6 +6,9 @@ import { StateOrder } from 'src/app/core/enums/state-order';
 import { Order } from 'src/app/core/models/order';
 import { VersionService } from 'src/app/core/services/version.service';
 import { OrdersService } from '../../services/orders.service';
+import { Store } from "@ngrx/store";
+import { selectAllOrders } from '../../store/selectors/orders.selectors';
+import { getAllOrdersAction } from '../../store/actions/orders.actions';
 
 @Component({
   selector: 'app-page-list-orders',
@@ -15,9 +18,7 @@ import { OrdersService } from '../../services/orders.service';
 export class PageListOrdersComponent implements OnInit, OnDestroy {
   public titleParent = 'Liste de commandes';
   // public collection!: Order[];
-  // public collection$: Observable<Order[]>;
-  public subCollection$: Subject<Order[]>;
-  public numVersion$: BehaviorSubject<number>;
+  public collection$: Observable<Order[]>;
   public headers: string[];
   public collection!: Order[]; 
 
@@ -28,49 +29,18 @@ export class PageListOrdersComponent implements OnInit, OnDestroy {
   public demoDate = new Date();
 
   public stateOrder = StateOrder;
-  
-  private count = 0;
-  private subscription: Subscription;
-  // private subNumVersion: Subscription;
 
   constructor(
     private ordersService: OrdersService,
-    private versionService: VersionService,
     private router: Router,
-    private route: ActivatedRoute) { 
+    private store: Store
+  ) { 
     this.headers = ["","", $localize `TjmHt`, $localize `NbJours`, $localize `TVA`, $localize `Total HT`, $localize `Total TTC`, $localize `Type Presta`, $localize `Client`, $localize `State`];
-    
-    // this.collection$ = this.ordersService.collection$;
-    this.subCollection$ = this.ordersService.subCollection$;
-    this.subscription = this.subCollection$.subscribe(
-      (listOrder: Order[]) => this.collection = [...listOrder]
-    )
-    //this.ordersService.refreshCollection();
-
-    this.route.data.pipe(
-      tap((data) => console.log(data)),//{ preload: true, orders: (8) […] }
-      pluck('orders') // je recupère simplement la propriété orders de mon objet data => (8) […]
-    ).subscribe(
-      (listOrder: Order[]) => this.collection = [...listOrder]
-    )
-
-
-    // this.ordersService.collection$.subscribe({
-    //     next: (data) => { 
-    //       console.log('Next : ', data);
-    //       this.collection = data;
-    //     },
-    //     error: (err) => { console.error('Error : ', err)},
-    //     complete: () => { console.info('Fin de transmission')}
-    //   })
-      
-      // this.subNumVersion = this.versionService.numVersion$.subscribe(versionNum => console.warn("**** Num Version"))
-      this.numVersion$ = this.versionService.numVersion$;
+    this.collection$ = this.store.select(selectAllOrders);
+    this.store.dispatch(getAllOrdersAction());
   }
 
   public total(val: number, coef: number, tva?: number): number {
-    this.count++;
-    console.warn(this.count);
     if(tva) {
       return val * coef * (1 + tva/100);
     } else {
@@ -91,8 +61,6 @@ export class PageListOrdersComponent implements OnInit, OnDestroy {
   }
 
   public onClickGoToEdit(order: Order): void {
-    // redirection vers une url du type /orders/edit/order.id
-    // this.router.navigate(['orders', 'edit', order.id]);
     this.router.navigateByUrl(`/orders/edit/${order.id}`);
   }
 
@@ -107,6 +75,5 @@ export class PageListOrdersComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     console.log('Instance detruite + desinscription');
     // this.subNumVersion.unsubscribe();
-    this.subscription.unsubscribe();
   }
 }
