@@ -27,4 +27,8 @@ export class HeaderComponent implements OnInit {
 
     this.modalService.displayModal($localize `Test`, $localize `Test ajouté avec success ! 🎉`)
   }
+  check() {
+    console.log("CD HEADER");
+    
+  }
 }

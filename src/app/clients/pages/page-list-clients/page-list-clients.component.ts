@@ -16,7 +16,7 @@ export class PageListClientsComponent implements OnInit, OnDestroy {
   public collection!: Client[];
   public stateClient = StateClient;
 
-  private subscription: Subscription;
+  private subscription!: Subscription;
 
   constructor(
     private clientsService: ClientsService,
@@ -24,13 +24,7 @@ export class PageListClientsComponent implements OnInit, OnDestroy {
   ) { 
     this.headers = ['', '', 'Name', 'TotalCaHt', 'Tva', 'TotalTTC', 'State'];
     this.subCollection$ = this.clientsService.subCollection$;
-    this.subscription = this.subCollection$.pipe(
-      tap(() =>console.log("Récup via subject"))
-    ).subscribe(
-      (listClient: Client[]) => {
-        this.collection = [...listClient];
-      }
-    )
+    
     // this.clientsService.refreshCollection();
     this.route.data.pipe(
       tap(() =>console.log("Init via resolve")),
@@ -47,6 +41,13 @@ export class PageListClientsComponent implements OnInit, OnDestroy {
     // this.clientsService.collection$.subscribe(
     //   (data) => console.log("TEST INstance clients", data)
     // )
+    this.subscription = this.subCollection$.pipe(
+      tap(() =>console.log("Récup via subject"))
+    ).subscribe(
+      (listClient: Client[]) => {
+        this.collection = [...listClient];
+      }
+    )
   }
 
   public onClickDeleteClient(client: Client): void {
@@ -66,4 +67,8 @@ export class PageListClientsComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
+  check() {
+    console.log("CD LIST CLIENTS");
+    
+  }
 }

@@ -13,4 +13,8 @@ export class AppComponent {
   constructor(private router: Router) {
     console.log(this.router.config);
   }
+
+  check() {
+    console.log("CD APP");
+  }
 }
