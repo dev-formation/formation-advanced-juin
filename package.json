@@ -13,7 +13,8 @@
     "compodoc:build": "compodoc -p tsconfig.doc.json",
     "compodoc:build-and-serve": "compodoc -p tsconfig.doc.json -s",
     "compodoc:serve": "compodoc -s",
-    "extract": "ng extract-i18n --output-path src/locale"
+    "extract": "ng extract-i18n --output-path src/locale",
+    "analyze": "ng build --configuration=production --stats-json && webpack-bundle-analyzer dist/formation-angular-advanced-starter/en/stats.json"
   },
   "private": true,
   "dependencies": {
@@ -33,6 +34,7 @@
     "bootstrap": "^5.1.3",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",
+    "webpack-bundle-analyzer": "^4.5.0",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
